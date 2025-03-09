@@ -24,12 +24,11 @@ jobs:
 
       - name: Build and Push App Docker Image
         run: |
-          docker build -t givency/givencystg:latest -t givency/givencystg:${{ env.IMAGE_TAG }} -f app/Dockerfile ./app
+          docker build -t givency/givencystg:latest -f sipta/Docker/app.Dockerfile .
           docker push givency/givencystg:latest
-          docker push givency/givencystg:${{ env.IMAGE_TAG }}
 
-      - name: Build and Push Webserver Docker Image
+      - name: Build and Push Web Server Docker Image
         run: |
-          docker build -t givency/givencystg-web:latest -t givency/givencystg-web:${{ env.IMAGE_TAG }} -f webserver/Dockerfile ./webserver
+          docker build -t givency/givencystg-web:latest -f sipta/Docker/web_server.Dockerfile .
           docker push givency/givencystg-web:latest
-          docker push givency/givencystg-web:${{ env.IMAGE_TAG }}
+
