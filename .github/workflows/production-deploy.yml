@@ -1,0 +1,48 @@
+name: Deploy Production to Docker Hub
+
+on:
+  push:
+    branches:
+      - main  # Trigger when code is merged to `main`
+  pull_request:
+    branches:
+      - release/*  # Trigger when creating/moving PR to `release/vX.Y`
+  release:
+    types: [published]  # Trigger when tagging a release (vX.Y.Z)
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Set Image Tag
+        run: |
+          if [[ $GITHUB_REF == refs/heads/main ]]; then
+            echo "IMAGE_TAG=latest" >> $GITHUB_ENV
+          elif [[ $GITHUB_REF == refs/heads/release/* ]]; then
+            RELEASE_VERSION=$(echo $GITHUB_REF | cut -d'/' -f3)
+            echo "IMAGE_TAG=$RELEASE_VERSION" >> $GITHUB_ENV
+          elif [[ $GITHUB_EVENT_NAME == "release" ]]; then
+            echo "IMAGE_TAG=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+          fi
+
+      - name: Build and Push App Docker Image
+        run: |
+          docker build -t givency/givencyprod:${{ env.IMAGE_TAG }} -t givency/givencyprod:latest -f Docker/Dockerfile/app.Dockerfile .
+          docker push givency/givencyprod:${{ env.IMAGE_TAG }}
+          docker push givency/givencyprod:latest
+
+      - name: Build and Push Web Server Docker Image
+        run: |
+          docker build -t givency/givencyprod-web:${{ env.IMAGE_TAG }} -t givency/givencyprod-web:latest -f Docker/Dockerfile/web_server.Dockerfile .
+          docker push givency/givencyprod-web:${{ env.IMAGE_TAG }}
+          docker push givency/givencyprod-web:latest
