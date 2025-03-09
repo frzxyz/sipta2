@@ -10,7 +10,7 @@
 
 ## Database Table and Seeder Configuration
 1. run command ```php artisan db:wipe``` (Drop Current Database)
-2. run command ```php artisan artisan:migrate --seed```
+2. run command ```php artisan migrate:refresh --seed```
 
 <br>
 <br>
