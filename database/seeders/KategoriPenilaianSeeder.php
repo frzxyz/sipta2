@@ -23,62 +23,62 @@ class KategoriPenilaianSeeder extends Seeder
 
         // Menambahkan data ke tabel kategori_penilaian
         KategoriPenilaian::create([
-            'id_form_penilaian' => 6,
+            'id_form_penilaian' => 5,
             'nama_kategori' => 'Kualitas Proposal',
             'bobot_kategori' => 25,
         ]);
 
         KategoriPenilaian::create([
-            'id_form_penilaian' => 2,
+            'id_form_penilaian' => 1,
             'nama_kategori' => 'Metodologi Penelitian',
             'bobot_kategori' => 25,
         ]);
 
         KategoriPenilaian::create([
-            'id_form_penilaian' => 3,
+            'id_form_penilaian' => 2,
             'nama_kategori' => 'Tinjauan Pustaka',
             'bobot_kategori' => 20,
         ]);
 
         KategoriPenilaian::create([
-            'id_form_penilaian' => 4,
+            'id_form_penilaian' => 3,
             'nama_kategori' => 'Presentasi',
             'bobot_kategori' => 15,
         ]);
 
         KategoriPenilaian::create([
-            'id_form_penilaian' => 5,
+            'id_form_penilaian' => 4,
             'nama_kategori' => 'Penguasaan Materi',
             'bobot_kategori' => 15,
         ]);
 
         // Form penilaian 2: Sidang Tugas Akhir
         KategoriPenilaian::create([
-            'id_form_penilaian' => 6,
+            'id_form_penilaian' => 5,
             'nama_kategori' => 'Hasil Implementasi',
             'bobot_kategori' => 25,
         ]);
 
         KategoriPenilaian::create([
-            'id_form_penilaian' => 2,
+            'id_form_penilaian' => 1,
             'nama_kategori' => 'Analisis dan Pembahasan',
             'bobot_kategori' => 20,
         ]);
 
         KategoriPenilaian::create([
-            'id_form_penilaian' => 4,
+            'id_form_penilaian' => 3,
             'nama_kategori' => 'Kualitas Penulisan',
             'bobot_kategori' => 15,
         ]);
 
         KategoriPenilaian::create([
-            'id_form_penilaian' => 3,
+            'id_form_penilaian' => 2,
             'nama_kategori' => 'Presentasi Hasil',
             'bobot_kategori' => 15,
         ]);
 
         KategoriPenilaian::create([
-            'id_form_penilaian' => 2,
+            'id_form_penilaian' => 1,
             'nama_kategori' => 'Kemampuan Menjawab Pertanyaan',
             'bobot_kategori' => 25,
         ]);

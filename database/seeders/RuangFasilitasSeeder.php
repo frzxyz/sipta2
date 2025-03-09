@@ -27,7 +27,7 @@ class RuangFasilitasSeeder extends Seeder
             ['id_ruangan' => 1, 'id_fasilitas' => 1, 'jumlah_fasilitas' => 10],
             ['id_ruangan' => 1, 'id_fasilitas' => 2, 'jumlah_fasilitas' => 5],
             ['id_ruangan' => 2, 'id_fasilitas' => 1, 'jumlah_fasilitas' => 8],
-            ['id_ruangan' => 2, 'id_fasilitas' => 3, 'jumlah_fasilitas' => 12],
+            ['id_ruangan' => 2, 'id_fasilitas' => 2, 'jumlah_fasilitas' => 12],
         ];
 
         foreach ($data as $item) {

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('kategori_penilaian', function (Blueprint $table) {
             $table->id('id_kategori');
             $table->unsignedBigInteger('id_form_penilaian');
-            $table->string('nama_kategori', 20);
+            $table->string('nama_kategori', 50);
             $table->integer('bobot_kategori');
             
             $table->foreign('id_form_penilaian')->references('id_form_penilaian')->on('form_penilaian')->onDelete('cascade');
