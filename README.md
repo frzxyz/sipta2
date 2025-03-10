@@ -29,4 +29,4 @@
 - Laravel Observer
 
 ## Authentication
-- Laravel Fortify
+- Laravel Forti
