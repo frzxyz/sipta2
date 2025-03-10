@@ -32,3 +32,26 @@ jobs:
           docker build -t givency/givencystg-web:latest -f Docker/Dockerfile/web_server.Dockerfile .
           docker push givency/givencystg-web:latest
 
+  notify:
+    needs: build-and-push  # Runs only after the build-and-push job is complete
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send Email Notification
+        uses: mendhak/email-action@v1
+        with:
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: ${{ secrets.SMTP_PORT }}
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "🚀 CI/CD Deployment Completed"
+          body: |
+            Deployment to staging has been completed.
+            - Docker Image: givency/givencystg:latest
+            - Web Image: givency/givencystg-web:latest
+            - Commit: ${{ github.sha }}
+
+            Check the deployment logs:
+            [GitHub Actions Run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          to: "raihanmian1@gmail.com"
+          from: "siptanotification@gmail.com"
