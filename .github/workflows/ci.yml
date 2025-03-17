@@ -1,0 +1,54 @@
+name: Integration Staging
+
+on:
+  pull_request:
+    branches:
+      - staging
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    services:
+      database:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          MYSQL_DATABASE: ${{ secrets.DB_DATABASE }}
+          MYSQL_USER: ${{ secrets.DB_USERNAME }}
+          MYSQL_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+          extensions: mbstring, pdo, bcmath
+          tools: composer
+
+      - name: Install Dependencies
+        run: composer install --no-progress --no-interaction --prefer-dist
+
+      - name: Copy .env
+        run: cp .env.example .env
+
+      - name: Update .env for CI
+        run: |
+          sed -i 's/DB_HOST=.*/DB_HOST=0.0.0.0/' .env
+
+      - name: Generate Application Key
+        run: php artisan key:generate
+
+      - name: Wipe Database
+        run: php artisan db:wipe --force
+
+      - name: Run Migrations
+        run: php artisan migrate:fresh --force
+  
+      # - name: Run Tests
+      #   run: php artisan test
